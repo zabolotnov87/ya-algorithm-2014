@@ -3,9 +3,34 @@ package com.zabolotnov;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.*;
 
 public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        int[][] triangles = readTriangles(new InputStreamReader(System.in));
+
+        Map<Double, Integer> count_to_radius = new HashMap<Double, Integer>();
+
+        for (int i = 0; i < triangles.length; ++i) {
+            double radius = calcInsideRadius(triangles[i]);
+            if (count_to_radius.containsKey(radius)) {
+                int newFrequency = count_to_radius.get(radius) + 1;
+                count_to_radius.put(radius, newFrequency);
+            } else {
+                count_to_radius.put(radius, 1);
+            }
+        }
+
+        ArrayList<Integer> counts = new ArrayList<Integer>(count_to_radius.values());
+        Collections.sort(counts, Collections.reverseOrder());
+
+        int max_count = counts.get(0);
+
+        System.out.println(String.valueOf(max_count));
+    }
 
     private static double calcInsideRadius(int[] triangle){
         double result = 0;
@@ -29,46 +54,33 @@ public class Main {
         return result;
     }
 
-    public static void main(String[] args) throws IOException {
-        // read input
-        BufferedReader inputRead = new BufferedReader(new InputStreamReader(System.in));
+    private static int[][] readTriangles(Reader reader) throws IOException {
+        BufferedReader inputReader = new BufferedReader(reader);
 
-        String s = inputRead.readLine();
-        int count_of_triangles = Integer.parseInt(s);
+        try {
+            String s = inputReader.readLine();
+            int count_of_triangles = Integer.parseInt(s);
 
-        int[][] triangles = new int[count_of_triangles][3];
+            int[][] triangles = new int[count_of_triangles][3];
 
-        for(int i = 0; i < count_of_triangles; ++i) {
-            s = inputRead.readLine();
-            String[] chunks = s.split(" ");
+            for (int i = 0; i < count_of_triangles; ++i) {
+                s = inputReader.readLine();
+                String[] chunks = s.split(" ");
 
-            int[] triangle = {
-                    Integer.parseInt(chunks[0]),
-                    Integer.parseInt(chunks[1]),
-                    Integer.parseInt(chunks[2])
-            };
+                int[] triangle = {
+                        Integer.parseInt(chunks[0]),
+                        Integer.parseInt(chunks[1]),
+                        Integer.parseInt(chunks[2])
+                };
 
-            triangles[i] = triangle;
-        }
-
-
-        Map<Double, Integer> count_to_radius = new HashMap<Double, Integer>();
-        for(int i = 0; i < count_of_triangles; ++i) {
-            double radius = calcInsideRadius(triangles[i]);
-            if (count_to_radius.containsKey(radius)){
-                int newFrequency = count_to_radius.get(radius) + 1;
-                count_to_radius.put(radius, newFrequency);
-            } else {
-                count_to_radius.put(radius, 1);
+                triangles[i] = triangle;
             }
+
+            return triangles;
+
+        } finally {
+            inputReader.close();
         }
-
-        ArrayList<Integer> counts = new ArrayList<Integer>(count_to_radius.values());
-        Collections.sort(counts);
-
-        int last = counts.size() - 1;
-        int result = counts.get(last);
-
-        System.out.println(String.valueOf(result));
     }
+
 }
