@@ -12,19 +12,19 @@ public class Main {
 
         int[][] triangles = readTriangles(new InputStreamReader(System.in));
 
-        Map<Double, Integer> count_to_radius = new HashMap<Double, Integer>();
+        Map<Double, Integer> radius_to_count = new HashMap<Double, Integer>();
 
         for (int i = 0; i < triangles.length; ++i) {
             double radius = calcInsideRadius(triangles[i]);
-            if (count_to_radius.containsKey(radius)) {
-                int newFrequency = count_to_radius.get(radius) + 1;
-                count_to_radius.put(radius, newFrequency);
+            if (radius_to_count.containsKey(radius)) {
+                int newFrequency = radius_to_count.get(radius) + 1;
+                radius_to_count.put(radius, newFrequency);
             } else {
-                count_to_radius.put(radius, 1);
+                radius_to_count.put(radius, 1);
             }
         }
 
-        ArrayList<Integer> counts = new ArrayList<Integer>(count_to_radius.values());
+        ArrayList<Integer> counts = new ArrayList<Integer>(radius_to_count.values());
         Collections.sort(counts, Collections.reverseOrder());
 
         int max_count = counts.get(0);
