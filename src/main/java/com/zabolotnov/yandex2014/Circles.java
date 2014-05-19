@@ -1,4 +1,4 @@
-package com.zabolotnov;
+package com.zabolotnov.yandex2014;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.*;
 
-public class Main {
+public class Circles {
 
     public static void main(String[] args) throws IOException {
 
