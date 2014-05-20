@@ -17,8 +17,8 @@ public class Circles {
         for (int i = 0; i < triangles.length; ++i) {
             double radius = calcInsideRadius(triangles[i]);
             if (radius_to_count.containsKey(radius)) {
-                int newFrequency = radius_to_count.get(radius) + 1;
-                radius_to_count.put(radius, newFrequency);
+                int count = radius_to_count.get(radius) + 1;
+                radius_to_count.put(radius, count);
             } else {
                 radius_to_count.put(radius, 1);
             }
